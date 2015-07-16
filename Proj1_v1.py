@@ -5,20 +5,20 @@ Proj1_v1=Flask(__name__)
 
 @Proj1_v1.route('/')
 def root():
-    return "Hello Muhammad"
+    return render_template('main.html', title='Main Page')
 
 @Proj1_v1.route('/rotn')
 def rotn():
-    return 'Caesar Cipher'
+    return render_template('rotn.html', title='Caesar Cipher')
 
 @Proj1_v1.route('/sengen')
 def sengen():
-    return 'Sentence Generator'
+    return render_template('sengen.html', title='Sentence Generator')
 
 @Proj1_v1.route('/markov/')
 @Proj1_v1.route('/markov/<text>')
 def markov_result(text='all'):
-    return 'Individual markov generated book: %s'%text
+    return render_template('markov.html', title='Markov Text Generator', book=text.capitalize())
 
 
 
