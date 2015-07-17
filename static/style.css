@@ -45,3 +45,8 @@ a:hover, a:active {
 #content {
     color:#cc8810
 }
+
+img {
+    width:180px;
+    height:150px;
+}
