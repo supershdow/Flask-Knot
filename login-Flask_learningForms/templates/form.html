@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login Page</title>
+</head>
+
+<body>
+<form method="POST" action="/login"><!--Sets the method to Post (so the results are not in the url bar) and it goes into the /login route of the flask app
+  Username: <input type="text" name="user"><br><!--Two input boxes for the user to input their credentials. Type password makes the contents of the box hidden-->
+  Password: <input type="password" name="pswd"><br>
+  <input type="submit" value="Login"><!--Submit button-->
+<form>
+<h4>{{error}}</h4><!--Placeholder for error messages-->
+</body>
+</html>
