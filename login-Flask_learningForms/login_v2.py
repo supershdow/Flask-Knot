@@ -5,12 +5,12 @@ import Reader
 login=Flask(__name__)
 
 
-username='supershdow'
-password='magic'
+#username='supershdow'
+#password='magic'
 #Username and password constants used for verification later
 #ARE VARIABLE
-credentials={}
-
+#credentials={}
+#credentials['supershdow']='magic'
 
 
 @login.route('/')
@@ -23,16 +23,32 @@ def log_in():
     if request.method=="GET":
         return render_template('form.html', error='Please enter from the form on the main page')#Tells the user to go through the main page if they entered directly
     elif request.method=="POST":#Verifies the username and password against constants at the top
-        if request_data['user']==username and request_data['pswd']==password:
-            return 'success'
+        credentials=Reader.getCsvDict('credentials.txt')
+        if request_data['user'] in credentials and request_data['user']!='':
+            if request_data['pswd']==credentials[request_data['user']][0]:
+                return 'success'
+            else:
+                return render_template('form.html', error='Invalid username or password')
         else:
             return render_template('form.html', error='Invalid username or password')
     else:
         return 'yo'
-@login.route('/signup')
+@login.route('/signup', methods=['POST', 'GET'])
 def signup():
-    return 'yo'
-
+    previousCredentials=Reader.read_file('credentials.txt')
+    if request.method=="GET":
+        return render_template('signup.html')
+    elif request.method=="POST":
+        new_user=request.form['nuser']
+        new_pswd=request.form['npswd']
+        new_credentials='%s,%s'%(new_user,new_pswd)
+        if new_user=='' or new_pswd=='' or new_user in previousCredentials or new_user.find(',')!=-1 or new_pswd.find(',')!=-1:
+            return render_template('form.html', error='Invalid signup credentials')
+        else:
+            Reader.write_file('credentials.txt',new_credentials,'a')
+            return render_template('form.html', error='Successfully signed up')
+    else:
+        return 'yo'
 
 if __name__=='__main__':
     login.debug=True

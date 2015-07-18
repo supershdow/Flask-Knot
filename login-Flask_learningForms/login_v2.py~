@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+import Reader
+
 
 login=Flask(__name__)
 
@@ -7,6 +9,9 @@ username='supershdow'
 password='magic'
 #Username and password constants used for verification later
 #ARE VARIABLE
+credentials={}
+
+
 
 @login.route('/')
 def root():
@@ -24,7 +29,10 @@ def log_in():
             return render_template('form.html', error='Invalid username or password')
     else:
         return 'yo'
-    
+@login.route('/signup')
+def signup():
+    return 'yo'
+
 
 if __name__=='__main__':
     login.debug=True

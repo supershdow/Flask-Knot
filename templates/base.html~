@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{title}}</title>
+<link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+
+<body>
+
+<div id="navbar">
+<ul>
+<li><a href="/">Main Page</a></li>
+<li><a href="/rotn">Caesar Cipher</a></li>
+<li><a href="/sengen">Sentence Generator</a></li>
+<li><a href="/markov">Markov text generator</a></li>
+<li><a href="/login">Login Page</a></li>
+</ul>
+</div>
+
+<div id="content">
+{% block content %}
+Content goes here!
+{% endblock %}
+</div>
+
+
+<div id="foot">
+<h4>Copyright &copy; 2015 by Muhammad and Benji</h4>
+</div>
+</body>
+</html>

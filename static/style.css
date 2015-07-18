@@ -21,7 +21,7 @@ li {
     float:left;
 }
 
-a:link, a:visited {
+.nav:link, .nav:visited {
     display: block;
     width: 300px;
     font-weight: bold;
@@ -33,7 +33,7 @@ a:link, a:visited {
     text-transform: uppercase;
 }
 
-a:hover, a:active {
+.nav:hover, .nav:active {
     background-color: #7A991A;
 }
 

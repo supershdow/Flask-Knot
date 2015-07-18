@@ -22,6 +22,11 @@ def getCsvDict(fname):
         foo[key]=value
     return foo
 
+def write_file(fname,text,mode='w'):
+    f=open(fname, mode)
+    f.write(text)
+    f.close()
+
 if __name__=='__main__': #If running on its own
     text=read_file('wordlist.csv')
     lines=getCsvList('wordlist.csv')
