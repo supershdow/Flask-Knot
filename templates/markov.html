@@ -2,10 +2,16 @@
 
 {% block content %}
 <h4>Taken from: {{book}}</h4>
-<form action="../data/storygen_v4.py">
-<select>
+<form action="/markov" method="POST">
+<select name="booklist">
+<option> </option>
 <option>War of the Worlds</option>
+<option>Sherlock Holmes</option>
+<option>Alice in Wonderland</option>
+<option>Tom Sawyer</option>
+
 </select>
 <input type="submit" value="Submit">
 </form>
+<p>{{text}}</p>
 {% endblock %}

@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from data import sentencegenerator as story
-from data import Reader
-from data import cipher
+from data import Reader,cipher,markov_v3 as chain
 
 
 Proj1_v1=Flask(__name__)
@@ -18,7 +17,7 @@ def rotn():
         request_data=request.form
         if request_data['key'].isdigit()==True:
             cypher=cipher.rotn(request_data['word'],int(request_data['key']))
-            return cypher
+            return render_template('rotn.html', title='Caesar Cipher', error=cypher)
         else:
             return render_template('rotn.html', title='Caesar Cipher', error="Not a valid key")
     else:
@@ -30,10 +29,19 @@ def sengen():
     return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(5))
 
 
-@Proj1_v1.route('/markov/')
-@Proj1_v1.route('/markov/<text>')
-def markov_result(text='all'):
-    return render_template('markov.html', title='Markov Text Generator', book=text.capitalize())
+@Proj1_v1.route('/markov', methods=['POST',"GET"])
+def markov_result():
+    if request.method=='GET':
+        return render_template('markov.html', title='Markov Text Generator', book='', text='')
+    elif request.method=='POST':
+        book=request.form['booklist']
+        if book!=' ':
+            return render_template('markov.html', title='Markov Text Generator', book=book, text=chain.markov_generator(book))
+        else:
+            yes='yes'
+    else:
+        return 'yo'
+
 
 @Proj1_v1.route('/login', methods=['POST','GET'])#Allows both Post (going through the form) and Get (going directly to the page)                                                           
 def log_in():

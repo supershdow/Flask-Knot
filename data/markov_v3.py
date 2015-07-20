@@ -1,11 +1,11 @@
 #markov chain text generator with variable key length
 
-import fileio_v1 as reader
+import Reader as reader
 from random import choice
 from random import random
 
 KEY_SIZE = 5
-book_dir = './book/'
+book_dir = './data/book/'
 FILE = book_dir + 'sherlock_clean.txt'
 
 def generate_chains( fname, key_size ):
@@ -51,22 +51,25 @@ def generate_text( chains, num_words, key_size ):
 # print text.capitalize()
 
 def markov_generator(bookname):
-    if bookname == 'wonderland':
+    if bookname == 'Alice in Wonderland':
         wonder_chains= generate_chains( book_dir +
                                         'wonderland_clean.txt', 5 )
         markov= generate_text( wonder_chains, 500, 5 )
         #print wonder_text
         #return wonder_text
     
-    if bookname == 'sherlock':
+    if bookname == 'Sherlock Holmes':
         sherlock_chains= generate_chains(book_dir +
                                          'sherlock_clean.txt', 5 )
         markov= generate_text(sherlock_chains , 500, 5)
         #print sherlock_text
         #return sherlock_text
     
-    if bookname == 'sawyer':
+    if bookname == 'Tom Sawyer':
         sawyer_chains= generate_chains(book_dir + 'sawyer_clean.txt', 5)
         markov= generate_text (sawyer_chains , 500, 5)
         #print sawyer_text
+    if bookname == 'War of the Worlds':
+        war_chains= generate_chains( book_dir + 'war_of_the_worlds_clean.txt', 5)
+        markov= generate_text (war_chains, 500, 5)
     return markov.capitalize()
