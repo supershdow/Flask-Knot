@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
-from data import storygen_v4 as story
+from data import sentencegenerator as story
 from data import Reader
+from data import cipher
+
 
 Proj1_v1=Flask(__name__)
 
@@ -8,13 +10,25 @@ Proj1_v1=Flask(__name__)
 def root():
     return render_template('main.html', title='Main Page')
 
-@Proj1_v1.route('/rotn')
+@Proj1_v1.route('/rotn', methods=["POST","GET"])
 def rotn():
-    return render_template('rotn.html', title='Caesar Cipher')
+    if request.method=="GET":
+        return render_template('rotn.html', title='Caesar Cipher')
+    elif request.method=="POST":
+        request_data=request.form
+        if request_data['key'].isdigit()==True:
+            cypher=cipher.rotn(request_data['word'],int(request_data['key']))
+            return cypher
+        else:
+            return render_template('rotn.html', title='Caesar Cipher', error="Not a valid key")
+    else:
+        return 'yo'
+
 
 @Proj1_v1.route('/sengen')
 def sengen():
-    return render_template('sengen.html', title='Sentence Generator')
+    return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(5))
+
 
 @Proj1_v1.route('/markov/')
 @Proj1_v1.route('/markov/<text>')

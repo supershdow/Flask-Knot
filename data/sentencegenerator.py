@@ -2,7 +2,7 @@ from random import random
 import Reader
 
 
-Dict=Reader.getCsvDict('wordlist.csv')
+Dict=Reader.getCsvDict('data/wordlist.csv')
 Subjects=Dict['nouns']
 Verbs=Dict['verbs']
 Adjectives=Dict['adjectives']
@@ -64,8 +64,10 @@ def verbPhrase():
     return verbPhrase
 
 def senGen(n):
+    sentences=''
     for i in range(n):
-        print nounPhrase()+" "+verbPhrase()+"!"
+        sentences+= nounPhrase()+" "+verbPhrase()+"! "
+    return sentences
 
-senGen(1)
+#senGen(1)
 
