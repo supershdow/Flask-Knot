@@ -66,8 +66,7 @@ def verbPhrase():
 def senGen(n):
     sentences=''
     for i in range(n):
-        sentences+= nounPhrase()+" "+verbPhrase()+"!"
-        sentences+= '\n'
+        sentences+= nounPhrase()+" "+verbPhrase()+"! "
     return sentences
 
 #senGen(1)

@@ -24,9 +24,19 @@ def rotn():
         return 'yo'
 
 
-@Proj1_v1.route('/sengen')
+@Proj1_v1.route('/sengen', methods=['POST','GET'])
 def sengen():
-    return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(5))
+    if request.method=="GET":
+        return render_template('sengen.html', title='Sentence Generator', Sentences='')
+    elif request.method=="POST":
+        sentences=request.form
+        if int(sentences['numsen'])>0:
+            return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(int(sentences['numsen'])))
+        else:
+            return render_template('sengen.html', title='Sentence Generator', Sentences='Invalid number of sentences')
+        
+    else:
+        return 'yo'
 
 
 @Proj1_v1.route('/markov', methods=['POST',"GET"])
@@ -42,6 +52,16 @@ def markov_result():
     else:
         return 'yo'
 
+def validate(u,p):
+    request_data=request.form
+    credentials=Reader.getCsvDict('./data/credentials.txt')
+    if request_data['user'] in credentials and request_data['user']!='':
+        if request_data['pswd']==credentials[request_data['user']][0]:
+            return True
+        else:
+            return False
+    else:
+        return False
 
 @Proj1_v1.route('/login', methods=['POST','GET'])#Allows both Post (going through the form) and Get (going directly to the page)                                                           
 def log_in():
@@ -50,11 +70,8 @@ def log_in():
     elif request.method=="POST":#Verifies the username and password against constants at the top
         request_data=request.form#Takes the immutable dictionary of the user's inputs and saves it in a variable
         credentials=Reader.getCsvDict('./data/credentials.txt')
-        if request_data['user'] in credentials and request_data['user']!='':
-            if request_data['pswd']==credentials[request_data['user']][0]:
-                return 'success'
-            else:
-                return render_template('form.html', error='Invalid username or password', title='Login')
+        if validate(request_data['user'],request_data['pswd']):
+            return render_template('form.html', title='login', error='Successful login')
         else:
             return render_template('form.html', error='Invalid username or password', title='Login')
     else:

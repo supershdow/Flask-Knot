@@ -2,5 +2,9 @@
 
 {% block content %}
 <h4>Sentence Generator</h4>
+<form action="/sengen" method="POST">
+Number of Sentences: <input type="number" name="numsen"><br>
+<input type="submit" value="Submit">
+</form>
 {{Sentences}}
 {% endblock %}
