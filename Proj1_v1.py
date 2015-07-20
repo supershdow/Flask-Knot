@@ -15,11 +15,14 @@ def rotn():
         return render_template('rotn.html', title='Caesar Cipher')
     elif request.method=="POST":
         request_data=request.form
-        if request_data['key'].isdigit()==True:
-            cypher=cipher.rotn(request_data['word'],int(request_data['key']))
-            return render_template('rotn.html', title='Caesar Cipher', error=cypher)
+        if request_data['key'].isdigit():
+            if abs(int(request_data['key']))<100:
+                   cypher=cipher.rotn(request_data['word'],int(request_data['key']))
+                   return render_template('rotn.html', title='Caesar Cipher', error=cypher)
+            else:
+                return render_template('rotn.html', title='Caesar Cipher', error='Key too large or too small')
         else:
-            return render_template('rotn.html', title='Caesar Cipher', error="Not a valid key")
+            return render_template('rotn.html', title='Caesar Cipher', error='Not a valid key')
     else:
         return 'yo'
 
@@ -30,8 +33,13 @@ def sengen():
         return render_template('sengen.html', title='Sentence Generator', Sentences='')
     elif request.method=="POST":
         sentences=request.form
-        if int(sentences['numsen'])>0:
-            return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(int(sentences['numsen'])))
+        if sentences['numsen'].isdigit():
+            if int(sentences['numsen'])>50:
+                return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(50))
+            elif int(sentences['numsen'])<0:
+                return render_template('sengen.html', title='Sentence Generator', Sentences='Invalid number of sentences')
+            else:
+                return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(int(sentences['numsen'])))
         else:
             return render_template('sengen.html', title='Sentence Generator', Sentences='Invalid number of sentences')
         
@@ -45,10 +53,10 @@ def markov_result():
         return render_template('markov.html', title='Markov Text Generator', book='', text='')
     elif request.method=='POST':
         book=request.form['booklist']
-        if book!=' ':
-            return render_template('markov.html', title='Markov Text Generator', book=book, text=chain.markov_generator(book))
+        if book!='Select':
+            return render_template('markov.html', title='Markov Text Generator', book=book, text=chain.markov_generator(book), image=book)
         else:
-            yes='yes'
+            return render_template('markov.html', title='Markov Text Generator', text='Not a valid input')
     else:
         return 'yo'
 
@@ -89,7 +97,7 @@ def signup():
         if new_user=='' or new_pswd=='' or new_user in previousCredentials or new_user.find(',')!=-1 or new_pswd.find(',')!=-1:
             return render_template('form.html', error='Invalid signup credentials', title='Login')
         else:
-            Reader.write_file('./data/credentials.txt',new_credentials,'a')
+            Reader.write_file('./data/credentials.txt',new_credentials+'\n','a')
             return render_template('form.html', error='Successfully signed up!', title='Login')
     else:
         return 'yo'
