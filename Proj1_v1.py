@@ -9,15 +9,23 @@ Proj1_v1=Flask(__name__)
 def root():
     return render_template('main.html', title='Main Page')
 
+def numCheck(n):
+    try:
+        float(n)
+        return True
+    except ValueError:
+        return False
+
+
 @Proj1_v1.route('/rotn', methods=["POST","GET"])
 def rotn():
     if request.method=="GET":
         return render_template('rotn.html', title='Caesar Cipher')
     elif request.method=="POST":
         request_data=request.form
-        if request_data['key'].isdigit():
-            if abs(int(request_data['key']))<100:
-                   cypher=cipher.rotn(request_data['word'],int(request_data['key']))
+        if numCheck(request_data['key']):
+            if abs(int(float(request_data['key'])))<100:
+                   cypher=cipher.rotn(request_data['word'],int(float(request_data['key'])))
                    return render_template('rotn.html', title='Caesar Cipher', error=cypher)
             else:
                 return render_template('rotn.html', title='Caesar Cipher', error='Key too large or too small')
@@ -33,32 +41,33 @@ def sengen():
         return render_template('sengen.html', title='Sentence Generator', Sentences='')
     elif request.method=="POST":
         sentences=request.form
-        if sentences['numsen'].isdigit():
-            if int(sentences['numsen'])>50:
-                return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(50))
-            elif int(sentences['numsen'])<0:
-                return render_template('sengen.html', title='Sentence Generator', Sentences='Invalid number of sentences')
+        if numCheck(sentences['numsen']):
+            if int(float(sentences['numsen']))>50:
+                return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(50), error="Input too high. Generating 50 sentences")
+            elif int(float(sentences['numsen']))<0:
+                return render_template('sengen.html', title='Sentence Generator', error='Invalid number of sentences')
             else:
-                return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(int(sentences['numsen'])))
+                return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(int(float(sentences['numsen']))))
         else:
-            return render_template('sengen.html', title='Sentence Generator', Sentences='Invalid number of sentences')
+            return render_template('sengen.html', title='Sentence Generator', error='Invalid number of sentences')
         
     else:
         return 'yo'
 
 
-@Proj1_v1.route('/markov', methods=['POST',"GET"])
-def markov_result():
+@Proj1_v1.route('/markov/', methods=['POST',"GET"])
+def markov():
     if request.method=='GET':
-        return render_template('markov.html', title='Markov Text Generator', book='', text='')
+        return render_template('markov.html', title='Markov Text Generator', book='', text='', image='Josh')
     elif request.method=='POST':
         book=request.form['booklist']
         if book!='Select':
             return render_template('markov.html', title='Markov Text Generator', book=book, text=chain.markov_generator(book), image=book)
         else:
-            return render_template('markov.html', title='Markov Text Generator', text='Not a valid input')
+            return render_template('markov.html', title='Markov Text Generator', text='Not a valid input', image='Josh')
     else:
         return 'yo'
+
 
 def validate(u,p):
     request_data=request.form

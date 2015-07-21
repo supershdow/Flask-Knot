@@ -23,12 +23,12 @@ li {
 
 .nav:link, .nav:visited {
     display: block;
-    width: 300px;
+    width:auto;
     font-weight: bold;
     color: #FFFFFF;
     background-color: #98bf21;
     text-align: center;
-    padding: 4px;
+    padding: 4px 10px;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -47,6 +47,6 @@ li {
 }
 
 img {
-    width:180px;
-    height:150px;
+    width:360px;
+    height:330px;
 }

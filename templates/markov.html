@@ -2,7 +2,7 @@
 
 {% block content %}
 <h4>Taken from: {{book}}</h4>
-<form action="/markov" method="POST">
+<form action="/markov/" method="POST">
 <select name="booklist">
 <option>Select</option>
 <option>War of the Worlds</option>
@@ -14,5 +14,5 @@
 <input type="submit" value="Submit">
 </form>
 <p>{{text}}</p>
-<img src="{{image}}.jpg">
+<img src="../static/img/{{image}}.jpg">
 {% endblock %}
