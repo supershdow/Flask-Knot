@@ -44,7 +44,7 @@ def sengen():
         if numCheck(sentences['numsen']):
             if int(float(sentences['numsen']))>50:
                 return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(50), error="Input too high. Generating 50 sentences")
-            elif int(float(sentences['numsen']))<0:
+            elif int(float(sentences['numsen']))<=0:
                 return render_template('sengen.html', title='Sentence Generator', error='Invalid number of sentences')
             else:
                 return render_template('sengen.html', title='Sentence Generator', Sentences=story.senGen(int(float(sentences['numsen']))))
