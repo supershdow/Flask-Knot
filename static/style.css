@@ -23,7 +23,7 @@ li {
 
 .nav:link, .nav:visited {
     display: block;
-    width:auto;
+    width:275px;
     font-weight: bold;
     color: #FFFFFF;
     background-color: #98bf21;
@@ -49,4 +49,9 @@ li {
 img {
     width:360px;
     height:330px;
+}
+
+p {
+    padding-left:10px;
+    padding-right:20px;
 }

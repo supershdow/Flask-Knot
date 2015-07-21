@@ -58,13 +58,13 @@ def sengen():
 @Proj1_v1.route('/markov/', methods=['POST',"GET"])
 def markov():
     if request.method=='GET':
-        return render_template('markov.html', title='Markov Text Generator', book='', text='', image='Josh')
+        return render_template('markov.html', title='Markov Text Generator', book='No book selected', text='', image='Josh')
     elif request.method=='POST':
         book=request.form['booklist']
         if book!='Select':
             return render_template('markov.html', title='Markov Text Generator', book=book, text=chain.markov_generator(book), image=book)
         else:
-            return render_template('markov.html', title='Markov Text Generator', text='Not a valid input', image='Josh')
+            return render_template('markov.html', title='Markov Text Generator', book='No book selected', text='Not a valid input', image='Josh')
     else:
         return 'yo'
 
